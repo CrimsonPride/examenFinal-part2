@@ -118,7 +118,13 @@ app.get('/collection',  (req, res) => {
 
 app.get('/ajouter', function (req, res) {
     console.log("je suis ajouter");
-    
+    var nb = (Math.random() *100 );
+    db.collection('provinces').insert(
+        {"code": "QC",
+         "nom": "Québec",
+         "capital": nb}
+    )
+    res.redirect('/collection')
 })
 
 app.get('/detruire', function (req, res) {
