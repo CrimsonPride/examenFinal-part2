@@ -68,6 +68,17 @@ app.get('/', function (req, res) {
     
 })
 
+app.get('/', function (req, res) {
+   console.log('la route route get / = ' + req.url)
+    fs.readFile('views/index.ejs', function (err, data) {
+   if (err) return console.error(err);
+   res.write(data.toString());
+    });
+
+    console.log("Program Ended");
+    
+})
+
 var server = app.listen(8082, function () {
    var host = server.address().address
    var port = server.address().port
