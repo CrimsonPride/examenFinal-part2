@@ -94,5 +94,5 @@ app.get('/provinces', function (req, res) {
         objProvince = JSON.parse(data);
         console.log(objProvince.toString());
     }); 
-    res.send(data);
+    res.send(objProvince);
 })
