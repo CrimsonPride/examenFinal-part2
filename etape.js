@@ -79,9 +79,20 @@ app.get('/fichier', function (req, res) {
     console.log("je suis fichier");
    fs.readFile("public/text/collection_provinces.json", 'utf8', function (err, data) {
        res.send(data);
-       console.log(data);
+       //console.log(data);
     
    });
 
 })
 
+app.get('/provinces', function (req, res) {
+    console.log("je suis provinces");
+    var provinces = "provinces";
+    var objProvince;
+    fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
+        if(err) return console.error(err);
+        objProvince = JSON.parse(data);
+        console.log(objProvince.toString());
+    }); 
+    res.send(data);
+})
