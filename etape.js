@@ -9,53 +9,8 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static('public'))  // pour utiliser le dossier public
 app.use(bodyParser.json())  // pour traiter les données JSON
 
-/******REQUIRE*********/
-var http = require('http');
-var url = require('url');
-
-
-/*******VARIABLES******/
-
 /**************FONCTIONS**********/
-/*****************ÉTAPE1*********************/
-/*// Créer un serveur
-http.createServer( function (request, response) {  
-   // On extrait de la requête «request» le chemin  qui nous donnera le nom de fichier
-   var pathname = url.parse(request.url).pathname;
-   
- 
-   console.log("pathname= " + pathname)
-  
-  // affiche le nom du fichier pour laquelle la requête a été généré
-   
 
-   // Lire par le «fs» (file système) le fichier de la requête 
-   fs.readFile("public/text/collection_provinces.json", function (err, data) {
-      if (err) {
-         console.log(err);
-         // HTTP Status: 404 : NOT FOUND
-         // Content Type: text/plain
-         response.writeHead(404, {'Content-Type': 'text/html ; charset=utf-8'});
-      }else { 
-         //Page found   
-         // HTTP Status: 200 : OK
-         // Content Type: text/plain
-         response.writeHead(200, {'Content-Type': 'text/html'});  
-         
-         // affiche le contenu du fichier dans la page HTML
-         response.write(data.toString());
-         console.log(data.toString());
-      }
-      // transmet la reponse  
-      response.end();
-   });   
-}).listen(8082);
-
-// message console
-console.log('Serveur se trouvant à http://127.0.0.1:8082/');
-*/
-
-/***********ÉTAPE 2***************/
 MongoClient.connect('mongodb://127.0.0.1:27017/carnet_adresse', (err, database) => {
   if (err) return console.log(err)
   db = database
@@ -66,7 +21,8 @@ MongoClient.connect('mongodb://127.0.0.1:27017/carnet_adresse', (err, database) 
 
 
 app.get('/', function (req, res) {
-   console.log('la route route get / = ' + req.url)
+   //console.log('la route route get / = ' + req.url)
+   //Affiche la vue par défaut
     fs.readFile('views/index.ejs', function (err, data) {
    if (err) return console.error(err);
    res.send(data.toString());
@@ -77,8 +33,9 @@ app.get('/', function (req, res) {
 })
 
 app.get('/fichier', function (req, res) {
-    console.log("je suis fichier");
-   fs.readFile("public/text/collection_provinces.json", 'utf8', function (err, data) {
+   //console.log("je suis fichier");
+   ////Lis le fichier collection_provinces.json
+    fs.readFile("public/text/collection_provinces.json", 'utf8', function (err, data) {
        res.send(data);
        //console.log(data);
     
@@ -87,14 +44,14 @@ app.get('/fichier', function (req, res) {
 })
 
 app.get('/provinces', function (req, res) {
-    console.log("je suis provinces");
-    var objProvinces;
+    //console.log("je suis provinces");
+    //Lis le fichier collection_provinces.json et le mets en tableau
     fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
         if(err){
             console.log("erreur de lecture");
             return 
         }
-        
+        //Afiche le contenu de la BD
         res.render("index.ejs",{provinces: JSON.parse(data)})
     }); 
     
@@ -117,24 +74,30 @@ app.get('/collection',  (req, res) => {
 })
 
 app.get('/ajouter', function (req, res) {
-    console.log("je suis ajouter");
+    //console.log("je suis ajouter");
+    //Génère un nombre aléatoire pour la capitale
     var nb = (Math.random() *100 );
+    //Ajoute une province au à la collection Provinces
     db.collection('provinces').insert(
         {"code": "QC",
          "nom": "Québec",
          "capital": nb}
     )
+    //Renvoi à Collection
     res.redirect('/collection')
 })
 
 app.get('/detruire', function (req, res) {
-    console.log("je suis plusieurs");
+    //console.log("je suis plusieurs");
+    //Supprime la base de donnée
     db.dropDatabase()
+    //Renvoi à Collection
     res.redirect('/collection')
 })
 
 app.get('/plusieurs', function (req, res) {
-    console.log("je suis plusieurs");
+    //console.log("je suis plusieurs");
+    //Rajoute un lot de données
     db.collection("provinces").insertMany( [	
 			{
 			 "code": "NF" ,
@@ -203,6 +166,8 @@ app.get('/plusieurs', function (req, res) {
 			}
 
 		]	
-                                          )
+    )
+    
+    //Renvoi à Collection
     res.redirect('/collection')
 })
