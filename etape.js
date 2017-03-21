@@ -11,20 +11,12 @@ app.use(bodyParser.json())  // pour traiter les données JSON
 
 /******REQUIRE*********/
 var http = require('http');
-var fs = require('fs');
 var url = require('url');
 
 
 /*******VARIABLES******/
-var provinces = "provinces";
-var objProvince;
 
 /**************FONCTIONS**********/
-fs.readFile('public/text/collection-provinces.json', 'utf8', function (err, data){
-   if(err) return console.error(err);
-   objProvince = JSON.parse(data);
-   console.log(objProvince.toString());
-});
 
 // Créer un serveur
 http.createServer( function (request, response) {  
@@ -32,14 +24,12 @@ http.createServer( function (request, response) {
    var pathname = url.parse(request.url).pathname;
    
  
-   console.log("request.url = " + request.url)
-   console.log("url.parse(request.url).pathname = " + url.parse(request.url).pathname)
+   console.log("pathname= " + pathname)
+  
   // affiche le nom du fichier pour laquelle la requête a été généré
-   console.log("Request for " + pathname + " received.");
    
 
    // Lire par le «fs» (file système) le fichier de la requête 
-   // le slice(1) permet de retirer le premier caractère
    fs.readFile(pathname.slice(1), function (err, data) {
       if (err) {
          console.log(err);
