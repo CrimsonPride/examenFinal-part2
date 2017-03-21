@@ -68,15 +68,13 @@ app.get('/', function (req, res) {
     
 })
 
-app.get('/', function (req, res) {
-   console.log('la route route get / = ' + req.url)
-    fs.readFile('views/index.ejs', function (err, data) {
-   if (err) return console.error(err);
-   res.write(data.toString());
-    });
+app.get('/#fichier', function (req, res) {
+    console.log("je suis fichier");
+   fs.readFile( __dirname + "/public/text/collection_provinces.json", 'utf8', function (err, data) {
+       res.write(data.toString);
+       res.end(data.toString);
+   });
 
-    console.log("Program Ended");
-    
 })
 
 var server = app.listen(8082, function () {
