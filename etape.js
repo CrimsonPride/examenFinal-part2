@@ -94,7 +94,7 @@ app.get('/provinces', function (req, res) {
             return 
         }
         
-        res.render("index.ejs",{provinces: JSON.stringify(data)})
+        res.render("index.ejs",{provinces: JSON.parse(data)})
     }); 
     
     
