@@ -129,7 +129,8 @@ app.get('/ajouter', function (req, res) {
 
 app.get('/detruire', function (req, res) {
     console.log("je suis plusieurs");
-    
+    db.dropDatabase();
+    res.redirect('/collection')
 })
 
 app.get('/plusieurs', function (req, res) {
