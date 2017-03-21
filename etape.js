@@ -75,10 +75,11 @@ app.get('/', function (req, res) {
     
 })
 
-app.get('/#fichier', function (req, res) {
+app.get('/fichier', function (req, res) {
     console.log("je suis fichier");
-   fs.readFile("/public/text/collection_provinces.json", 'utf8', function (err, data) {
-       res.send(data.toString);
+   fs.readFile("public/text/collection_provinces.json", 'utf8', function (err, data) {
+       res.send(data);
+       console.log(data);
     
    });
 
