@@ -56,11 +56,12 @@ console.log('Serveur se trouvant à http://127.0.0.1:8082/');
 */
 
 /***********ÉTAPE 2***************/
-var server = app.listen(8082, function () {
-   var host = server.address().address
-   var port = server.address().port
-   
-   console.log("Example app listening at http://%s:%s", host, port)
+MongoClient.connect('mongodb://127.0.0.1:27017/carnet_adresse', (err, database) => {
+  if (err) return console.log(err)
+  db = database
+  app.listen(8082, () => {
+    console.log('connexion à la BD et on écoute sur le port 8082')
+  })
 })
 
 
@@ -101,9 +102,18 @@ app.get('/provinces', function (req, res) {
     
 })
 
-app.get('/collection', function (req, res) {
-    console.log("je suis collection");
+app.get('/collection',  (req, res) => {
+   console.log('la route route get / = ' + req.url)
+ 
+    var cursor = db.collection('provinces').find().toArray(function(err, resultat){
+       if (err) return console.log(err)
+    // renders index.ejs
+    // affiche le contenu de la BD
+    res.render('index.ejs', {provinces: resultat})
+
+    }) 
     
+
 })
 
 app.get('/ajouter', function (req, res) {
