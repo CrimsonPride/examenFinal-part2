@@ -14,16 +14,22 @@
 
   	  		<a href="fichier">1-Fichier</a>
   	  		<a href="provinces">2-Provinces</a>
-  	  		<a href="#">3-Collection</a>
-  	  		<a href="#">4-Ajouter un document</a>
-  	  		<a href="#">5-Détruire</a>
-  	  		<a href="#">6-Ajouter plusieurs</a>
+  	  		<a href="collection">3-Collection</a>
+  	  		<a href="ajouter">4-Ajouter un document</a>
+  	  		<a href="detruire">5-Détruire</a>
+  	  		<a href="plusieurs">6-Ajouter plusieurs</a>
   	  	<nav>
   	  </header>
   	  <main>
-		  <table class="tableau">
-        ----------------------------------------
-		  </table>
+        <table>
+            <% for(var i=0; i < provinces.length; i++) { %>
+            <tr>
+                <td><%= provinces[i].code %></td>
+                <td><%= provinces[i].nom %></td>
+                <td><%= provinces[i].capital %></td>
+            </tr>
+            <% } %>
+        </table>
 	  </main>
 	  <footer>
 	  <p>Epreuve finale volet II - Programmation et veille technologique - TIM - Collège de Maisonneuve</p>
