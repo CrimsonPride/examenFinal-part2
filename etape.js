@@ -17,8 +17,8 @@ var url = require('url');
 /*******VARIABLES******/
 
 /**************FONCTIONS**********/
-
-// Créer un serveur
+/*****************ÉTAPE1*********************/
+/*// Créer un serveur
 http.createServer( function (request, response) {  
    // On extrait de la requête «request» le chemin  qui nous donnera le nom de fichier
    var pathname = url.parse(request.url).pathname;
@@ -53,5 +53,51 @@ http.createServer( function (request, response) {
 
 // message console
 console.log('Serveur se trouvant à http://127.0.0.1:8082/');
+*/
 
+/***********ÉTAPE 2***************/
 
+http.createServer( function (request, response) {  
+   // On extrait de la requête «request» le chemin  qui nous donnera le nom de fichier
+   var pathname = url.parse(request.url).pathname;
+   
+ 
+   console.log("pathname= " + pathname)
+  
+  // affiche le nom du fichier pour laquelle la requête a été généré
+   
+
+   // Lire par le «fs» (file système) le fichier de la requête 
+   fs.readFile("views/index.ejs", function (err, data) {
+      var fName = "collection_provinces.json";
+       if (err) {
+         console.log(err);
+         // HTTP Status: 404 : NOT FOUND
+         // Content Type: text/plain
+         response.writeHead(404, {'Content-Type': 'text/html ; charset=utf-8'});
+      }else { 
+         //Page found   
+         // HTTP Status: 200 : OK
+         // Content Type: text/plain
+         response.writeHead(200, {'Content-Type': 'text/html'});  
+
+          function genererTab(obj){
+            var sChaine = "";
+            for (fName in obj){
+               sChaine += "<tr><td>" + fName + "</td><td>" + obj[fName].toString() + "</td></tr>";
+            }
+            return sChaine;
+         }
+         // affiche le contenu du fichier dans la page HTML
+         response.render('index.ejs');
+          
+          
+         console.log(data.toString());
+      }
+      // transmet la reponse  
+      response.end();
+   });   
+}).listen(8082);
+
+// message console
+console.log('Serveur se trouvant à http://127.0.0.1:8082/');
