@@ -56,12 +56,19 @@ console.log('Serveur se trouvant à http://127.0.0.1:8082/');
 */
 
 /***********ÉTAPE 2***************/
+var server = app.listen(8082, function () {
+   var host = server.address().address
+   var port = server.address().port
+   
+   console.log("Example app listening at http://%s:%s", host, port)
+})
+
 
 app.get('/', function (req, res) {
    console.log('la route route get / = ' + req.url)
     fs.readFile('views/index.ejs', function (err, data) {
    if (err) return console.error(err);
-   res.write(data.toString());
+   res.send(data.toString());
     });
 
     console.log("Program Ended");
@@ -70,16 +77,10 @@ app.get('/', function (req, res) {
 
 app.get('/#fichier', function (req, res) {
     console.log("je suis fichier");
-   fs.readFile( __dirname + "/public/text/collection_provinces.json", 'utf8', function (err, data) {
-       res.write(data.toString);
-       res.end(data.toString);
+   fs.readFile("/public/text/collection_provinces.json", 'utf8', function (err, data) {
+       res.send(data.toString);
+    
    });
 
 })
 
-var server = app.listen(8082, function () {
-   var host = server.address().address
-   var port = server.address().port
-   
-   console.log("Example app listening at http://%s:%s", host, port)
-})
