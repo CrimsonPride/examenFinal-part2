@@ -87,11 +87,18 @@ app.get('/fichier', function (req, res) {
 
 app.get('/provinces', function (req, res) {
     console.log("je suis provinces");
+    var objProvinces;
+    var provinces =  fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
+        if(err){
+            console.log("erreur de lecture");
+            return 
+        }
+        
+        res.render("views/index.ejs",{provinces: data})
+    }); 
     
-    var provinces =  fs.readFile('public/text/collection_provinces.json', 'utf8'); 
     
     
-    res.render("views/index.ejs",{provinces: code,nom:nom,capital:capital})
 })
 
 app.get('/collection', function (req, res) {
