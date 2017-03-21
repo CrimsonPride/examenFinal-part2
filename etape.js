@@ -88,13 +88,13 @@ app.get('/fichier', function (req, res) {
 app.get('/provinces', function (req, res) {
     console.log("je suis provinces");
     var objProvinces;
-    var provinces =  fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
+    fs.readFile('public/text/collection_provinces.json', 'utf8', function (err, data){
         if(err){
             console.log("erreur de lecture");
             return 
         }
         
-        res.render("views/index.ejs",{provinces: data})
+        res.render("index.ejs",{provinces: JSON.stringify(data)})
     }); 
     
     
@@ -103,11 +103,16 @@ app.get('/provinces', function (req, res) {
 
 app.get('/collection', function (req, res) {
     console.log("je suis collection");
-    v
+    
 })
 
 app.get('/ajouter', function (req, res) {
     console.log("je suis ajouter");
+    
+})
+
+app.get('/detruire', function (req, res) {
+    console.log("je suis plusieurs");
     
 })
 
