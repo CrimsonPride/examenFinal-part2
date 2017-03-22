@@ -27,8 +27,6 @@ app.get('/', function (req, res) {
    if (err) return console.error(err);
    res.send(data.toString());
     });
-
-    console.log("Program Ended");
     
 })
 
